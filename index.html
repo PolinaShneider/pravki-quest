@@ -13,7 +13,7 @@
     <div class="start-screen__container">
         <div id="start">
             <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
-            <div ref="input" class="send-form hidden">
+            <div v-bind:class="{hidden : isHidden}" class="send-form">
                 <input type="text" id="sender-field" placeholder="I want some magic...">
                 <span class="input-form__icon send-form__icon">
                     <img src="public/app/img/mushroom-emoji.png" alt="">
@@ -25,13 +25,11 @@
         var app5 = new Vue({
             el: '#start',
             data: {
-                input: {
-                    isHidden: true
-                }
+                isHidden: true
             },
             methods: {
                 toggleInput: function () {
-                    this.$refs.input.classList.toggle('hidden');
+                    this.isHidden = !this.isHidden;
                 }
             }
         })
