@@ -35,7 +35,7 @@ fairyQuest.docReady = function (f) {
 
 
 
-fairyQuest.logger = require('./modules/logger');
+fairyQuest.startScreen = require('./modules/startScreen');
 
 
 module.exports = fairyQuest;

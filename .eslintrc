@@ -68,7 +68,8 @@
     "console" : true,
     "fairyQuest": true,
     "setTimeout" : true,
-    "Element": true
+    "Element": true,
+    "Vue": true
 
   }
 }
