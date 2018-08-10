@@ -27,6 +27,7 @@
     "eslint-loader": "^1.7.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^0.11.1",
+    "normalize.css": "^8.0.0",
     "postcss-apply": "^0.8.0",
     "postcss-color-function": "^4.0.0",
     "postcss-color-hex-alpha": "^3.0.0",
@@ -46,5 +47,8 @@
     "stylelint-webpack-plugin": "^0.7.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "vue": "^2.5.17"
   }
 }

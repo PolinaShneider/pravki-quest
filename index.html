@@ -7,8 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="public/build/bundle.css">
     <script src="public/build/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 </head>
-<body>
-
+<body class="start-screen">
+    <div class="start-screen__container">
+        <div id="start">
+            <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
+            <div ref="input" class="send-form hidden">
+                <input type="text" id="sender-field" placeholder="I want some magic...">
+                <span class="input-form__icon send-form__icon">
+                    <img src="public/app/img/mushroom-emoji.png" alt="">
+                </span>
+            </div>
+        </div>
+    </div>
+    <script>
+        var app5 = new Vue({
+            el: '#start',
+            data: {
+                input: {
+                    isHidden: true
+                }
+            },
+            methods: {
+                toggleInput: function () {
+                    this.$refs.input.classList.toggle('hidden');
+                }
+            }
+        })
+    </script>
 </body>
 </html>

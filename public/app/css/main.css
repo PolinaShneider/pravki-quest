@@ -1,3 +1,10 @@
-body {
-  background: mintcream;
-}
+/**
+ * Base styles
+ */
+
+@import 'base.css';
+
+/**
+ * Components
+ */
+@import url('components/start-screen.css');
