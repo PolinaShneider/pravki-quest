@@ -64,8 +64,8 @@
     <div class="start-screen__container">
         <div>
             <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
-            <div v-bind:class="{hidden : isHidden}" class="start-screen__input">
-                <input type="text" class="start-screen__input-field" placeholder="I want some magic...">
+            <div v-on:click="wobbleEmpty" v-bind:class="{hidden : isHidden, wobble : isEmpty}" class="start-screen__input">
+                <input ref="formInput" type="text" class="start-screen__input-field" placeholder="I want some magic...">
                 <span class="start-screen__input-button">
                     <img src="public/app/img/mushroom-emoji.png" alt="">
                 </span>
@@ -77,7 +77,8 @@
     export default {
         data: function() {
             return {
-                isHidden: true
+                isHidden: true,
+                isEmpty: false
             };
         },
         methods: {
@@ -85,6 +86,13 @@
 
                 this.isHidden = !this.isHidden;
 
+            },
+            wobbleEmpty: function () {
+                if (this.$refs.formInput.value === '') {
+                    this.isEmpty = true;
+                } else {
+                    this.isEmpty = false;
+                }
             }
         }
     }
