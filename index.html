@@ -6,21 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="public/build/bundle.css">
-    <script src="public/build/bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 </head>
 <body class="start-screen">
-    <div class="start-screen__container">
-        <div id="start">
-            <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
-            <div v-bind:class="{hidden : isHidden}" class="send-form">
-                <input type="text" id="sender-field" placeholder="I want some magic...">
-                <span class="input-form__icon send-form__icon">
-                    <img src="public/app/img/mushroom-emoji.png" alt="">
-                </span>
-            </div>
-        </div>
-    </div>
-    <script src="public/app/js/modules/startScreen.js"></script>
+    <div id="start"></div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="public/build/bundle.js"></script>
 </body>
 </html>

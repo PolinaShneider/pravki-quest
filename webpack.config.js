@@ -1,16 +1,16 @@
-const webpack           = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+'use strict';
+const webpack             = require('webpack');
+const { VueLoaderPlugin } = require('vue-loader');
+const ExtractTextPlugin   = require('extract-text-webpack-plugin');
 
 module.exports = {
-
-    entry: './public/app/js/main.js',
-
+    entry: [
+        './public/app/js/main.js'
+    ],
     output: {
         path: __dirname + '/public/build/',
-        filename: 'bundle.js',
-        library: 'fairyQuest'
+        filename: 'bundle.js'
     },
-
     module: {
         rules: [
             {
@@ -30,6 +30,11 @@ module.exports = {
                     },
                     'postcss-loader'
                 ]),
+            },
+            {
+                test: /\.vue$/,
+                exclude: /(node_modules)/,
+                use: 'vue-loader'
             },
             {
                 test: /\.js$/,
@@ -53,22 +58,13 @@ module.exports = {
             }
         ]
     },
-
     plugins: [
         /** Used for migrating to newer webpack version */
         new webpack.LoaderOptionsPlugin({ options: {} }),
         /** Build separated styles bundle */
         new ExtractTextPlugin('bundle.css'),
+        /** Vue loader */
+        new VueLoaderPlugin()
     ],
-
-    watch: true,
-
-    /**
-     * Rebuild bundles on files changes
-     * Param --watch is a key for the command in the package.json scripts
-     */
-    watchOptions: {
-        aggregateTimeout: 50,
-    }
-
-};
+    watch: true
+}

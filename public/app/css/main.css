@@ -3,8 +3,4 @@
  */
 
 @import 'base.css';
-
-/**
- * Components
- */
-@import url('components/start-screen.css');
+@import 'variables.css';
