@@ -63,11 +63,11 @@
 <template>
     <div class="start-screen__container">
         <div>
-            <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="/public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
+            <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
             <div v-bind:class="{hidden : isHidden}" class="start-screen__input">
                 <input type="text" class="start-screen__input-field" placeholder="I want some magic...">
                 <span class="start-screen__input-button">
-                    <img src="/public/app/img/mushroom-emoji.png" alt="">
+                    <img src="public/app/img/mushroom-emoji.png" alt="">
                 </span>
             </div>
         </div>
