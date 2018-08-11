@@ -65,7 +65,7 @@
         <div>
             <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
             <div v-on:keyup.enter="wobbleEmpty" v-bind:class="{hidden : isHidden, wobble : isEmpty}" class="start-screen__input">
-                <input v-on:change="userInput" ref="formInput" type="text" class="start-screen__input-field" placeholder="I want some magic...">
+                <input @change="userInput" @keyup.enter="userInput" ref="formInput" type="text" class="start-screen__input-field" placeholder="I want some magic...">
                 <span class="start-screen__input-button">
                     <img src="public/app/img/mushroom-emoji.png" alt="">
                 </span>
