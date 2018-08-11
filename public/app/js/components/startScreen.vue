@@ -64,8 +64,8 @@
     <div class="start-screen__container">
         <div>
             <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
-            <div v-on:click="wobbleEmpty" v-bind:class="{hidden : isHidden, wobble : isEmpty}" class="start-screen__input">
-                <input ref="formInput" type="text" class="start-screen__input-field" placeholder="I want some magic...">
+            <div v-on:keyup.enter="wobbleEmpty" v-bind:class="{hidden : isHidden, wobble : isEmpty}" class="start-screen__input">
+                <input v-on:change="userInput" ref="formInput" type="text" class="start-screen__input-field" placeholder="I want some magic...">
                 <span class="start-screen__input-button">
                     <img src="public/app/img/mushroom-emoji.png" alt="">
                 </span>
@@ -90,8 +90,20 @@
             wobbleEmpty: function () {
                 if (this.$refs.formInput.value === '') {
                     this.isEmpty = true;
-                } else {
-                    this.isEmpty = false;
+                    let self = this;
+                    setTimeout(function(){
+                        self.isEmpty = false;
+                    }, 2000);
+                }
+            },
+            userInput: function () {
+                switch (this.$refs.formInput.value) {
+                    case '/help':
+                        console.log('/help');
+                        break;
+                    default:
+                        console.log('/default');
+                        break;
                 }
             }
         }
