@@ -1,11 +1,17 @@
 html, body {
   height: 100%;
 }
+
 body {
   background: var(--bodyBackground);
 }
+
 .hidden {
   visibility: hidden !important;
+}
+
+.hide {
+  display: none !important;
 }
 
 /** Wobbling animation */

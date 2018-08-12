@@ -1,7 +1,13 @@
 require('../css/main.css');
 
 import Vue from 'vue';
-import startScreen from './components/startScreen.vue';
+import Root from './components/Root.vue';
+
 new Vue({
-    render: h => h(startScreen)
-}).$mount('#start');
+    render: h => h(Root)
+}).$mount('#root');
+
+
+
+
+

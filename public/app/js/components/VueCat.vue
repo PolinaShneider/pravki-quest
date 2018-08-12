@@ -4,14 +4,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100%;
         }
 
         &__mysterious-cat {
             width: 150px;
             height: auto;
             display: block;
-            margin: 0 auto;
+            margin: 30px auto;
 
             &:hover {
                 cursor: pointer;
@@ -22,6 +21,10 @@
             margin-top: 30px;
             display: flex;
             width: 370px;
+
+            @media (max-width: 450px) {
+                width: 100%;
+            }
 
             &-field {
                 width: 100%;
@@ -63,10 +66,10 @@
 <template>
     <div class="start-screen__container">
         <div>
-            <img v-on:click="toggleInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
+            <img v-on:click="showInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
             <div v-on:keyup.enter="wobbleEmpty" v-bind:class="{hidden : isHidden, wobble : isEmpty}" class="start-screen__input">
-                <input @change="userInput" @keyup.enter="userInput" ref="formInput" type="text" class="start-screen__input-field" placeholder="I want some magic...">
-                <span class="start-screen__input-button">
+                <input v-on:keyup.enter="userInput" ref="formInput" type="text" class="start-screen__input-field" placeholder="Enter /start command">
+                <span class="start-screen__input-button" v-on:click="wobbleEmpty">
                     <img src="public/app/img/mushroom-emoji.png" alt="">
                 </span>
             </div>
@@ -78,15 +81,22 @@
         data: function() {
             return {
                 isHidden: true,
-                isEmpty: false
+                isEmpty: false,
+                currentCommand: ''
             };
         },
         methods: {
-            toggleInput: function () {
+            /**
+             * Show input field under cat's had
+             */
+            showInput: function () {
 
-                this.isHidden = !this.isHidden;
+                this.isHidden = false;
 
             },
+            /**
+             * Add shaking animation if input field is empty
+             */
             wobbleEmpty: function () {
                 if (this.$refs.formInput.value === '') {
                     this.isEmpty = true;
@@ -96,15 +106,12 @@
                     }, 2000);
                 }
             },
+            /**
+             * Passed commands value to the parent component
+             */
             userInput: function () {
-                switch (this.$refs.formInput.value) {
-                    case '/help':
-                        console.log('/help');
-                        break;
-                    default:
-                        console.log('/default');
-                        break;
-                }
+                this.currentCommand = this.$refs.formInput.value;
+                this.$parent.$emit('userInput', this.currentCommand);
             }
         }
     }
