@@ -73,7 +73,7 @@
             <img v-on:click="showInput" class="start-screen__mysterious-cat" src="public/app/img/cat-emoji.png" alt="Fairy Cat 🐱">
             <div v-on:keyup.enter="wobbleEmpty" v-bind:class="{hidden : isHidden, wobble : isEmpty}" class="start-screen__input">
                 <input v-on:keyup.enter="userInput" ref="formInput" type="text" class="start-screen__input-field" placeholder="Enter /start command">
-                <span class="start-screen__input-button" v-on:click="wobbleEmpty">
+                <span class="start-screen__input-button" v-on:click="wobbleEmpty(); userInput()">
                     <img src="public/app/img/mushroom-emoji.png" alt="">
                 </span>
             </div>
