@@ -12,6 +12,10 @@
             display: block;
             margin: 30px auto;
 
+            @media (max-width: 450px) {
+                margin: 15px auto;
+            }
+
             &:hover {
                 cursor: pointer;
             }
