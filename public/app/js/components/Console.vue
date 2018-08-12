@@ -29,13 +29,17 @@
             outline: none;
             color: #fff;
             font-size: 12px;
-            line-height: 16px;
+            line-height: 20px;
+            padding: 0;
+            margin: 0;
 
             + label {
                 float: left;
-                margin-top: 1px;;
                 margin-right: 7px;
+
                 &::before {
+                    line-height: 20px;
+                    vertical-align: middle;
                     content: '~ root#';
                     display: inline-block;
                     color: #fff;
