@@ -274,7 +274,7 @@
                          * In case commandList is already shown
                          */
                         if (commandVal === '/help' && this.commandsAreHidden === false) {
-                            return "Commands are shown above, press 'It is clear' if you are okey with it 🤗";
+                            return "Commands are shown above, press 'It is clear' if you are okay with it 🤗";
                         }
                         return this.commandsList[i].commandOutput;
                     }
