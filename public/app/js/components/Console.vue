@@ -25,11 +25,10 @@
 
         &__input {
             background-color: transparent;
-            border: 0px solid transparent;
+            border: 0 solid transparent;
             outline: none;
             color: #fff;
-            font-size: 12px;
-            line-height: 20px;
+            font: 12px/16px Menlo,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
             padding: 0;
             margin: 0;
 
@@ -38,9 +37,9 @@
                 margin-right: 7px;
 
                 &::before {
-                    line-height: 20px;
+                    font: 12px/15px Menlo,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
                     vertical-align: middle;
-                    content: '~ root#';
+                    content: attr(data-before);
                     display: inline-block;
                     color: #fff;
                 }
@@ -50,24 +49,12 @@
         &__framed {
 
             &-accept {
-                padding-top: 16px;
+                margin-top: 16px;
                 display: inline-block;
-
-                &::after {
-                    content: '';
-                    display: block;
-                    height: 1px;
-                    width: 0;
-                    background: #fff;
-                    transition: width .8s;
-                }
+                outline: 1px solid #fff;
 
                 &:hover {
                     cursor: pointer;
-
-                    &::after {
-                        width: 100%;
-                    }
                 }
             }
 
@@ -106,7 +93,7 @@
 </style>
 
 <template>
-    <div ref="consoleWrapper" class="console" v-bind:class="{hide : consoleIsHidden}">
+    <div ref="consoleWrapper" v-on:click="consoleFocus" class="console" v-bind:class="{hide : consoleIsHidden}">
         <p>
             Hi, I'm your personal Vue Cat. And I offer you to solve the quest.
             Below is a list of commands. Read them very carefully and start the task.
@@ -125,7 +112,7 @@
         </p>
         <div ref="consoleBody"></div>
         <input v-on:keyup.enter="consoleMethods" class="console__input" type="text" ref="consoleInput">
-        <label></label>
+        <label ref="consoleInputLabel" data-before="vuecat@macbook: ~ user$"></label>
     </div>
 </template>
 <script>
@@ -140,6 +127,11 @@
                  * List of possible console commands
                  */
                 commandsList: [
+                    {
+                        commandName: '/start',
+                        commandDescription: 'starts the console',
+                        commandOutput: 'You have to call this command from an input field to start the console️'
+                    },
                     {
                         commandName: '/exit',
                         commandDescription: 'quits the console',
@@ -159,11 +151,17 @@
                         commandName: '/hint',
                         commandDescription: 'gives you a hint',
                         commandOutput: 'This option is in the development. Stay in touch ❤️'
+                    },
+                    {
+                        commandName: '/sudo',
+                        commandDescription: 'enables superuser mode',
+                        commandOutput: 'Now you are a root user, captain... I hope, you know what you do'
                     }
                 ],
                 commandsAreHidden: false,
                 consoleIsHidden: true,
-                consoleCommand: ''
+                consoleCommand: '',
+                superUser: false
             }
         },
         methods: {
@@ -198,6 +196,26 @@
             showCommands: function() {
                 this.commandsAreHidden = false;
             },
+            /**
+             * Enables superuser privileges
+             */
+            enableRoot: function() {
+                this.superUser = true;
+                this.$refs.consoleInputLabel.dataset.before = 'vuecat@macbook: ~ root#';
+            },
+            /**
+             * Disables superuser privileges
+             */
+            disableRoot: function() {
+                this.superUser = false;
+                this.$refs.consoleInputLabel.dataset.before = 'vuecat@macbook: ~ user$';
+            },
+            consoleFocus: function () {
+                this.$refs.consoleInput.focus();
+                setTimeout(() => {
+                    this.$refs.consoleInput.focus();
+                })
+            },
             consoleMethods: function () {
                 /**
                  * Pass input's command to parent components
@@ -217,11 +235,17 @@
                     case '/exit':
                         this.clearInput();
                         this.clearConsole();
+                        this.disableRoot();
                         this.hideConsole();
                         break;
                     case '/clear':
                         this.clearInput();
                         this.clearConsole();
+                        break;
+                    case '/sudo':
+                        this.addMessage();
+                        this.clearInput();
+                        this.enableRoot();
                         break;
                     default:
                         this.addMessage();
@@ -234,12 +258,13 @@
              */
             addMessage: function () {
                 let consoleBody = this.$refs.consoleBody,
-                    consoleWrapper = this.$refs.consoleWrapper;
+                    consoleWrapper = this.$refs.consoleWrapper,
+                    consoleInputGreeting = this.$refs.consoleInputLabel.getAttribute('data-before');
                 /**
                  * Insert entered command name
                  */
                 let command = document.createElement('div');
-                command.textContent = this.consoleCommand;
+                command.textContent = consoleInputGreeting + ' ' + this.consoleCommand;
                 command.classList.add('console__message');
                 consoleBody.appendChild(command);
 
@@ -290,6 +315,7 @@
             currentCommand: function() {
                 if (this.currentCommand === '/start') {
                     this.consoleIsHidden = false;
+                    this.consoleFocus();
                 }
             }
         }
