@@ -102,7 +102,7 @@
              * Add shaking animation if input field is empty
              */
             wobbleEmpty: function () {
-                if (this.$refs.formInput.value === '') {
+                if (this.$refs.formInput.value !== '/start') {
                     this.isEmpty = true;
                     let self = this;
                     setTimeout(function(){
