@@ -51,7 +51,7 @@
         <div>
             <img v-on:click="raiseUp" class="start-screen__mysterious-cat" src="public/app/img/notebook-emoji.jpeg">
         </div>
-        <a class="start-screen__download" v-bind:class="{hide : !downloadButtonIsVisible}" href="/task/pravki.zip" download>Скачать</a>
+        <a class="start-screen__download" v-bind:class="{hide : !downloadButtonIsVisible}" href="https://github.com/PolinaShneider/pravki-quest/blob/master/task/pravki.zip" download>Скачать</a>
     </div>
 </template>
 <script>

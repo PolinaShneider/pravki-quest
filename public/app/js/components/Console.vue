@@ -42,7 +42,7 @@
             overflow-y: scroll;
 
             &--evil {
-                background-image: url('/public/app/img/black-bg.jpg');
+                background-image: url('../../img/black-bg.jpg');
                 background-repeat: no-repeat;
                 background-size: cover;
             }
@@ -197,9 +197,9 @@
         </audio>
         <div class="console__form console__form--evil">
             <h1 class="console__form-h1--evil">Поздравляю! Теперь ты магистр черного ордена вёрстки</h1>
-            <img class="console__form-zombie" src="/public/app/img/zombie-emoji.png" alt="">
-            <img class="console__form-owl" src="/public/app/img/owl-emoji.png" alt="">
-            <img class="console__form-alien" src="/public/app/img/pizza-emoji.png" alt="">
+            <img class="console__form-zombie" src="../../img/zombie-emoji.png" alt="">
+            <img class="console__form-owl" src="../../img/owl-emoji.png" alt="">
+            <img class="console__form-alien" src="../../img/pizza-emoji.png" alt="">
             <a v-on:click="closeForm" class="console__form-button" href="#">
                 <span>Принять</span>
             </a>
