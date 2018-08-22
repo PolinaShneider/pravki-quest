@@ -254,7 +254,7 @@
                 superUser: false,
                 downloadButtonIsVisible: false,
                 hintsStep: 0,
-                formIsHidden: false
+                formIsHidden: true
             }
         },
         methods: {
