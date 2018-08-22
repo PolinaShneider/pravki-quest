@@ -3,7 +3,7 @@ html, body {
 }
 
 body {
-  background-image: url('/public/app/img/space-bg.jpg');
+  background-image: url('/pravki-quest/public/app/img/space-bg.jpg');
   background-repeat: repeat;
   max-height: 100vh;
   overflow: hidden;
