@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <cat></cat>
+    <div class="container">
+        <cat :downloadButtonIsVisible="downloadButtonIsVisible"></cat>
         <console :currentCommand="currentCommand"></console>
     </div>
 </template>
@@ -22,6 +22,7 @@
              */
             return {
                 currentCommand: '',
+                downloadButtonIsVisible: ''
             };
 
         },
@@ -33,16 +34,13 @@
             /**
              * Passed command from VueCat's input
              */
-            this.$on('userInput', (passedCommand) => {
-                this.currentCommand = passedCommand;
+            this.$on('raiseUp', (value) => {
+                this.currentCommand = value;
             });
 
-            /**
-             * Passed command from Console's input
-             */
-            this.$on('consoleMethods', (consoleCommand) => {
-                this.currentCommand = consoleCommand;
-            })
+            this.$on('showDownloadButton', (value) => {
+                this.downloadButtonIsVisible = value;
+            });
         }
     }
 </script>

@@ -63,3 +63,4 @@ typings/
 # other stuff
 .idea/
 .DS_Store
+/task/

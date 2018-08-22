@@ -12,7 +12,7 @@
         background: #000;
         padding: 25px;
         width: 452px;
-        height: 340px;
+        height: 250px;
         overflow-y: scroll;
         color: #fff;
         font: 12px/16px Menlo,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
@@ -21,6 +21,85 @@
             width: 100%;
             box-sizing: border-box;
             padding: 15px;
+        }
+
+        &__form {
+            height: 100%;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,.2);
+            border-radius: .3rem;
+            overflow-y: scroll;
+
+            &--evil {
+                background-image: url('/public/app/img/black-bg.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            &-button {
+                width: 250px;
+                min-height: 58px;
+                font: 20px/25px Menlo,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+            }
+
+            &-alien {
+                width: 300px;
+                height: auto;
+                display: block;
+                margin: 50px auto;
+            }
+
+            &-gorilla {
+                position: absolute;
+                right: 20px;
+                bottom: 20px;
+            }
+
+            &-zombie {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+            }
+
+            &-avocado {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            &-owl {
+                position: absolute;
+                left: 20px;
+                bottom: 20px;
+            }
+
+            &-h1--evil {
+                color: #9A0000;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+            }
+        }
+
+        &__is-visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        &__is-hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility ease 1s, opacity ease 1.5s linear;
         }
 
         &__input {
@@ -52,6 +131,7 @@
                 margin-top: 16px;
                 display: inline-block;
                 outline: 1px solid #fff;
+                padding: 0 3px;
 
                 &:hover {
                     cursor: pointer;
@@ -93,26 +173,37 @@
 </style>
 
 <template>
-    <div ref="consoleWrapper" v-on:click="consoleFocus" class="console" v-bind:class="{hide : consoleIsHidden}">
+    <div ref="consoleWrapper" v-on:click="consoleFocus" class="console" v-bind:class="{'console__is-hidden' : consoleIsHidden}">
         <p>
-            Hi, I'm your personal Vue Cat. And I offer you to solve the quest.
-            Below is a list of commands. Read them very carefully and start the task.
-            I'm going to give you a few hints.
+            Привет! Мне очень нужна твоя помощь. Есть макет — в нем нужно кое-что подправить по мелочи. Сам не могу справиться. В долгу не останусь. Чем быстрее сделаешь, тем больше заплачу.
         </p>
         <p v-bind:class="{hide : commandsAreHidden}" class="console__framed">
             <span class="console__framed-inner">
                 <span>
-                    <span v-for="command in commandsList">
+                    <span v-for="command in commandsList" v-if="command.commandDescription">
                         {{ command.commandName }} - {{ command.commandDescription }}<br/>
                     </span>
 
-                    <span v-on:click="hideCommands" class="console__framed-accept">It's clear</span>
+                    <span v-on:click="hideCommands" class="console__framed-accept">Понятно</span>
                 </span>
             </span>
         </p>
         <div ref="consoleBody"></div>
         <input v-on:keyup.enter="consoleMethods" class="console__input" type="text" ref="consoleInput">
-        <label ref="consoleInputLabel" data-before="vuecat@macbook: ~ user$"></label>
+        <label ref="consoleInputLabel" data-before="angry-freelancer@macbook: ~ user$"></label>
+        <audio preload="auto">
+            <source src="https://github.com/nclud/2011.beercamp.com/blob/gh-pages/audio/inception.mp3?raw=true" type="audio/mp3" />
+            <source src="https://github.com/nclud/2011.beercamp.com/blob/gh-pages/audio/inception.ogg?raw=true" type="audio/ogg" />
+        </audio>
+        <div class="console__form console__form--evil">
+            <h1 class="console__form-h1--evil">Поздравляю! Теперь ты магистр черного ордена вёрстки</h1>
+            <img class="console__form-zombie" src="/public/app/img/zombie-emoji.png" alt="">
+            <img class="console__form-owl" src="/public/app/img/owl-emoji.png" alt="">
+            <img class="console__form-alien" src="/public/app/img/pizza-emoji.png" alt="">
+            <a v-on:click="closeForm" class="console__form-button" href="#">
+                <span>Принять</span>
+            </a>
+        </div>
     </div>
 </template>
 <script>
@@ -128,40 +219,42 @@
                  */
                 commandsList: [
                     {
-                        commandName: '/start',
-                        commandDescription: 'starts the console',
-                        commandOutput: 'You have to call this command from an input field to start the console️'
-                    },
-                    {
-                        commandName: '/exit',
-                        commandDescription: 'quits the console',
-                        commandOutput: ''
-                    },
-                    {
                         commandName: '/help',
-                        commandDescription: 'shows list of possible commands',
-                        commandOutput: 'I am always glad to help you. Have a nice day, guy!'
+                        commandDescription: 'показать список возможных команд',
+                        commandOutput: 'Я всегда рад помочь. Не забывай, что команды начинаются со слэша /'
                     },
                     {
                         commandName: '/clear',
-                        commandDescription: 'clears console output',
+                        commandDescription: 'очистить вывод консоли',
                         commandOutput: ''
                     },
                     {
+                        commandName: '/wget',
+                        commandDescription: '',
+                        commandOutput: '#download-files display: block;'
+                    },
+                    {
                         commandName: '/hint',
-                        commandDescription: 'gives you a hint',
-                        commandOutput: 'This option is in the development. Stay in touch ❤️'
+                        commandDescription: 'вывести подсказку',
+                        commandOutput: [
+                            'Некоторые элементы интерфейса могут быть скрыты. То есть они есть на странице, но мы не можем догадаться об их существовании. Смекаешь, какое CSS-свойство здесь может быть замешано?',
+                            'CSS-cтили можно применять по тегу (например, span), по .class и по #id. Помнишь, в чем разница?',
+                            'Ладно, больше не буду мучить тебя. Тебе еще предстоит хорошенько поработать с макетом. Поищи в интернете, как с помощью команд в консоли скачивать файлы. Не забывай, что у нас любую команду нужно вводить, начиная со слэша. Заодно и проверишь себя'
+                        ]
                     },
                     {
                         commandName: '/sudo',
-                        commandDescription: 'enables superuser mode',
-                        commandOutput: 'Now you are a root user, captain... I hope, you know what you do'
+                        commandDescription: 'активировать режим супер-пользователя',
+                        commandOutput: 'Теперь ты супер-пользователь! Это влааасть. И ответственность. Надеюсь, ты понимаешь, что делаешь'
                     }
                 ],
-                commandsAreHidden: false,
+                commandsAreHidden: true,
                 consoleIsHidden: true,
                 consoleCommand: '',
-                superUser: false
+                superUser: false,
+                downloadButtonIsVisible: false,
+                hintsStep: 0,
+                formIsHidden: false
             }
         },
         methods: {
@@ -201,14 +294,14 @@
              */
             enableRoot: function() {
                 this.superUser = true;
-                this.$refs.consoleInputLabel.dataset.before = 'vuecat@macbook: ~ root#';
+                this.$refs.consoleInputLabel.dataset.before = 'angry-freelancer@macbook: ~ root#';
             },
             /**
              * Disables superuser privileges
              */
             disableRoot: function() {
                 this.superUser = false;
-                this.$refs.consoleInputLabel.dataset.before = 'vuecat@macbook: ~ user$';
+                this.$refs.consoleInputLabel.dataset.before = 'angry-freelancer@macbook: ~ user$';
             },
             consoleFocus: function () {
                 this.$refs.consoleInput.focus();
@@ -216,12 +309,18 @@
                     this.$refs.consoleInput.focus();
                 })
             },
+            showDownloadButton: function () {
+                this.downloadButtonIsVisible = true;
+                this.$parent.$emit('showDownloadButton', this.downloadButtonIsVisible);
+            },
+            closeForm: function () {
+                document.getElementsByTagName('audio')[0].play();
+            },
             consoleMethods: function () {
                 /**
                  * Pass input's command to parent components
                  */
                 this.consoleCommand = this.$refs.consoleInput.value;
-                this.$parent.$emit('consoleMethods', this.consoleCommand);
 
                 /**
                  * Perform console actions depending on an entered command
@@ -232,12 +331,6 @@
                         this.clearInput();
                         this.showCommands();
                         break;
-                    case '/exit':
-                        this.clearInput();
-                        this.clearConsole();
-                        this.disableRoot();
-                        this.hideConsole();
-                        break;
                     case '/clear':
                         this.clearInput();
                         this.clearConsole();
@@ -246,6 +339,11 @@
                         this.addMessage();
                         this.clearInput();
                         this.enableRoot();
+                        break;
+                    case '/wget':
+                        this.addMessage();
+                        this.clearInput();
+                        this.showDownloadButton();
                         break;
                     default:
                         this.addMessage();
@@ -275,8 +373,14 @@
 
                 if (this.getCommandOutput(this.consoleCommand)) {
                     commandOutput.textContent = this.getCommandOutput(this.consoleCommand);
+
+                    if (this.consoleCommand === '/hint' && this.hintsStep < 2) {
+                        this.hintsStep++;
+                    } else {
+                        this.hintsStep = 0;
+                    }
                 } else {
-                    commandOutput.textContent = 'I do not know this command, sorry 😿';
+                    commandOutput.textContent = 'Извини, я тебя не понимаю 😿';
                 }
 
                 commandOutput.classList.add('console__message');
@@ -299,12 +403,15 @@
                          * In case commandList is already shown
                          */
                         if (commandVal === '/help' && this.commandsAreHidden === false) {
-                            return "Commands are shown above, press 'It is clear' if you are okay with it 🤗";
+                            return "Список возможных команд выведен выше. Прочитай их внимательно и нажми 'Понятно', если это действительно так 🤗";
+                        }
+
+                        if (commandVal === '/hint') {
+                            return this.commandsList[i].commandOutput[this.hintsStep];
                         }
                         return this.commandsList[i].commandOutput;
                     }
                 }
-
             }
         },
 
@@ -313,10 +420,8 @@
          */
         watch: {
             currentCommand: function() {
-                if (this.currentCommand === '/start') {
-                    this.consoleIsHidden = false;
-                    this.consoleFocus();
-                }
+                this.consoleIsHidden = false;
+                this.consoleFocus();
             }
         }
     }
