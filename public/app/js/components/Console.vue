@@ -195,7 +195,7 @@
             <source src="https://github.com/nclud/2011.beercamp.com/blob/gh-pages/audio/inception.mp3?raw=true" type="audio/mp3" />
             <source src="https://github.com/nclud/2011.beercamp.com/blob/gh-pages/audio/inception.ogg?raw=true" type="audio/ogg" />
         </audio>
-        <div class="console__form console__form--evil">
+        <div v-bind:class="{hide : formIsHidden}" class="console__form console__form--evil">
             <h1 class="console__form-h1--evil">Поздравляю! Теперь ты магистр черного ордена вёрстки</h1>
             <img class="console__form-zombie" src="../../img/zombie-emoji.png" alt="">
             <img class="console__form-owl" src="../../img/owl-emoji.png" alt="">
