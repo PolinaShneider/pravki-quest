@@ -386,7 +386,6 @@
                         this.addMessage();
                         this.clearInput();
                         this.showForm();
-                        console.log(this.formIsHidden);
                         break;
                     default:
                         this.addMessage();
