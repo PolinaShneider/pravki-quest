@@ -123,6 +123,10 @@
                  line-height: 1.25em;
                  text-align: center;
                  font-weight: 500;
+
+                 @media (max-width: 600px) {
+                     font-size: 25px;
+                 }
             }
 
             &-h1--good {
@@ -138,6 +142,7 @@
                 @media (max-width: 450px) {
                     color: #fff;
                     -webkit-text-stroke: 2px #991411;
+                    font-size: 25px;
                 }
              }
         }
