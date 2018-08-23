@@ -47,35 +47,38 @@
                 background-size: cover;
             }
 
+            &--good {
+                 background-image: url('/pravki-quest/public/app/img/good-bg.jpg');
+                 background-repeat: no-repeat;
+                 background-size: cover;
+            }
+
             &-button {
                 width: 250px;
                 min-height: 58px;
+                margin-top: -70px;
                 font: 20px/25px Menlo,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
             }
 
-            &-alien {
-                width: 300px;
+            &-cat {
+                width: 350px;
                 height: auto;
                 display: block;
                 margin: 50px auto;
+                z-index: 10;
             }
 
-            &-gorilla {
-                position: absolute;
-                right: 20px;
-                bottom: 20px;
-            }
+             &-coffee {
+                  width: 250px;
+                  height: auto;
+                  display: block;
+                  margin: 0 auto 100px;
+              }
 
             &-zombie {
                 position: absolute;
                 top: 20px;
                 left: 20px;
-            }
-
-            &-avocado {
-                position: absolute;
-                top: 20px;
-                right: 20px;
             }
 
             &-owl {
@@ -85,10 +88,26 @@
             }
 
             &-h1--evil {
-                color: #9A0000;
-                text-transform: uppercase;
-                letter-spacing: 0.8px;
+                 color: #C10115;
+                 text-transform: uppercase;
+                 letter-spacing: 2px;
+                 font-size: 30px;
+                 max-width: 600px;
+                 line-height: 1.25em;
+                 text-align: center;
+                 font-weight: 500;
             }
+
+            &-h1--good {
+                 color: #000;
+                 font-family: 'Pacifico', cursive;
+                 letter-spacing: 2px;
+                 font-size: 32px;
+                 max-width: 600px;
+                 line-height: 1.25em;
+                 text-align: center;
+                 font-weight: 400;
+             }
         }
 
         &__is-visible {
@@ -191,15 +210,18 @@
         <div ref="consoleBody"></div>
         <input v-on:keyup.enter="consoleMethods" class="console__input" type="text" ref="consoleInput">
         <label ref="consoleInputLabel" data-before="angry-freelancer@macbook: ~ user$"></label>
-        <audio preload="auto">
-            <source src="https://github.com/nclud/2011.beercamp.com/blob/gh-pages/audio/inception.mp3?raw=true" type="audio/mp3" />
-            <source src="https://github.com/nclud/2011.beercamp.com/blob/gh-pages/audio/inception.ogg?raw=true" type="audio/ogg" />
+        <audio id="horror" preload="auto">
+            <source src="/pravki-quest/public/app/music/horror.mp3" type="audio/mp3" />
         </audio>
-        <div v-bind:class="{hide : formIsHidden}" class="console__form console__form--evil">
-            <h1 class="console__form-h1--evil">Поздравляю! Теперь ты магистр черного ордена вёрстки</h1>
-            <img class="console__form-zombie" src="/pravki-quest/public/app/img/zombie-emoji.png" alt="">
-            <img class="console__form-owl" src="/pravki-quest/public/app/img/owl-emoji.png" alt="">
-            <img class="console__form-alien" src="/pravki-quest/public/app/img/pizza-emoji.png" alt="">
+        <audio id="relax" preload="auto">
+            <source src="/pravki-quest/public/app/music/relax.mp3" type="audio/mp3" />
+        </audio>
+        <div v-bind:class="[{hide : formIsHidden}, superUser ? 'console__form--evil' : 'console__form--good']" class="console__form">
+            <h1 v-bind:class="[superUser ? 'console__form-h1--evil' : 'console__form-h1--good']">Поздравляю! Теперь ты магистр {{ superUser ? 'черного' : 'белого' }} ордена вёрстки</h1>
+            <img v-bind:class="{ hide: !superUser }" class="console__form-zombie" src="/pravki-quest/public/app/img/zombie-emoji.png" alt="">
+            <img v-bind:class="{ hide: !superUser }" class="console__form-owl" src="/pravki-quest/public/app/img/owl-emoji.png" alt="">
+            <img v-bind:class="{hide: !superUser}" class="console__form-cat" src="/pravki-quest/public/app/img/cat.png" alt="">
+            <img v-bind:class="{hide: superUser}" class="console__form-coffee" src="/pravki-quest/public/app/img/coffee.png" alt="">
             <a v-on:click="closeForm" class="console__form-button" href="#">
                 <span>Принять</span>
             </a>
@@ -232,6 +254,11 @@
                         commandName: '/wget',
                         commandDescription: '',
                         commandOutput: '#download-files display: block;'
+                    },
+                    {
+                        commandName: '/scp',
+                        commandDescription: '',
+                        commandOutput: 'Отправляем файл на сервер...'
                     },
                     {
                         commandName: '/hint',
@@ -314,7 +341,17 @@
                 this.$parent.$emit('showDownloadButton', this.downloadButtonIsVisible);
             },
             closeForm: function () {
-                document.getElementsByTagName('audio')[0].play();
+                if (this.superUser) {
+                    document.getElementById('horror').play();
+                } else {
+                    document.getElementById('relax').play();
+                }
+                setTimeout(() => {
+                    this.formIsHidden = true;
+                }, 3500)
+            },
+            showForm: function () {
+                this.formIsHidden = false;
             },
             consoleMethods: function () {
                 /**
@@ -344,6 +381,12 @@
                         this.addMessage();
                         this.clearInput();
                         this.showDownloadButton();
+                        break;
+                    case '/scp':
+                        this.addMessage();
+                        this.clearInput();
+                        this.showForm();
+                        console.log(this.formIsHidden);
                         break;
                     default:
                         this.addMessage();

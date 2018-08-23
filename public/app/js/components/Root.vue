@@ -22,7 +22,8 @@
              */
             return {
                 currentCommand: '',
-                downloadButtonIsVisible: ''
+                downloadButtonIsVisible: '',
+                consoleIsHidden: ''
             };
 
         },
@@ -40,6 +41,10 @@
 
             this.$on('showDownloadButton', (value) => {
                 this.downloadButtonIsVisible = value;
+            });
+
+            this.$on('hideConsole', (value) => {
+                this.consoleIsHidden = value;
             });
         }
     }
