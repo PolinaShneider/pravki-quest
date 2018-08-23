@@ -41,6 +41,13 @@
             border-radius: .3rem;
             overflow-y: scroll;
 
+            @media (max-width: 600px) {
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
             &--evil {
                 background-image: url('/pravki-quest/public/app/img/black-bg.jpg');
                 background-repeat: no-repeat;
@@ -58,6 +65,10 @@
                 min-height: 58px;
                 margin-top: -70px;
                 font: 20px/25px Menlo,Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+
+                @media (max-width: 450px) {
+                    margin-top: 70px;
+                }
             }
 
             &-cat {
@@ -66,6 +77,10 @@
                 display: block;
                 margin: 50px auto;
                 z-index: 10;
+
+                @media (max-width: 450px) {
+                    display: none;
+                }
             }
 
              &-coffee {
@@ -73,18 +88,30 @@
                   height: auto;
                   display: block;
                   margin: 0 auto 100px;
+
+                  @media (max-width: 450px) {
+                      display: none;
+                  }
               }
 
             &-zombie {
                 position: absolute;
                 top: 20px;
                 left: 20px;
+
+                @media (max-width: 1000px) {
+                    display: none;
+                }
             }
 
             &-owl {
                 position: absolute;
                 left: 20px;
                 bottom: 20px;
+
+                @media (max-width: 450px) {
+                    display: none;
+                }
             }
 
             &-h1--evil {
@@ -107,6 +134,11 @@
                  line-height: 1.25em;
                  text-align: center;
                  font-weight: 400;
+
+                @media (max-width: 450px) {
+                    color: #fff;
+                    -webkit-text-stroke: 2px #991411;
+                }
              }
         }
 
