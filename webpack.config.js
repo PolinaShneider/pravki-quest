@@ -46,13 +46,6 @@ module.exports = {
                         options: {
                             presets: [ 'env' ]
                         }
-                    },
-                    /** ES lint For webpack build */
-                    {
-                        loader: 'eslint-loader',
-                        options: {
-                            fix: true
-                        }
                     }
                 ]
             }
