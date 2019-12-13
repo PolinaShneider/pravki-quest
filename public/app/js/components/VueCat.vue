@@ -7,6 +7,16 @@
             flex-direction: column;
         }
 
+         .hint {
+             &--hidden {
+                  opacity: 0;
+              }
+             margin-top: 30px;
+             opacity: 1;
+             font-family: 'system-ui';
+             transition: opacity 1s ease-in;
+         }
+
         &__download {
             display: flex;
             align-items: center;
@@ -48,6 +58,7 @@
 
 <template>
     <div class="start-screen__container">
+        <div ref="hint" class="hint hint--hidden">Нажми на меня 👇🏼👇🏼👇🏼</div>
         <div>
             <img v-on:click="raiseUp" class="start-screen__mysterious-cat" src="public/app/img/notebook-emoji.jpeg">
         </div>
@@ -61,6 +72,11 @@
             return {
                 isHigh: false,
             };
+        },
+        created() {
+            setTimeout(() => {
+                this.$refs.hint.classList.remove('hint--hidden');
+            }, 500);
         },
         methods: {
             /**

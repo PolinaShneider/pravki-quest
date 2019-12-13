@@ -394,7 +394,7 @@
                 /**
                  * Pass input's command to parent components
                  */
-                this.consoleCommand = this.$refs.consoleInput.value;
+                this.consoleCommand = this.$refs.consoleInput.value.trim().toLowerCase();
 
                 /**
                  * Perform console actions depending on an entered command
